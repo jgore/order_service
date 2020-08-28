@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "creationTime": {
+      "type": "string"
+    },
+    "orderlineViews": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/orderlineView"
+      }
+    }
+  },
+  "definitions": {
+    "orderlineView": {
+      "type": "object",
+      "properties": {
+        "productTitle": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "price": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

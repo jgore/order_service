@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "orderlines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/orderLineRequest"
+      }
+    }
+  },
+  "definitions": {
+    "orderLineRequest": {
+      "type": "object",
+      "properties": {
+        "productTitle": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
