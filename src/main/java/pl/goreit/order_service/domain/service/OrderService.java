@@ -1,8 +1,8 @@
 package pl.goreit.order_service.domain.service;
 
-import com.example.types.CreateOrderRequest;
 import pl.goreit.order_service.DomainException;
 import pl.goreit.order_service.domain.model.Order;
+import pl.goreit.order_service.generated.CreateOrderRequest;
 
 import java.util.List;
 

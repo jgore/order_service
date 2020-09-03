@@ -1,9 +1,8 @@
-package pl.goreit.order_service.domain.service.impl;
+package pl.goreit.order_service.domain.service;
 
-import com.example.types.CreateOrderRequest;
-import com.example.types.OrderLineRequest;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.bson.types.ObjectId;
+import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.runtime.ProcessInstantiationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.goreit.order_service.DomainException;
@@ -11,8 +10,9 @@ import pl.goreit.order_service.ExceptionCode;
 import pl.goreit.order_service.domain.model.Order;
 import pl.goreit.order_service.domain.model.OrderLine;
 import pl.goreit.order_service.domain.model.Product;
-import pl.goreit.order_service.domain.service.MqSenderService;
-import pl.goreit.order_service.domain.service.OrderService;
+import pl.goreit.order_service.domain.service.mq.MqOrderService;
+import pl.goreit.order_service.generated.CreateOrderRequest;
+import pl.goreit.order_service.generated.OrderLineRequest;
 import pl.goreit.order_service.infrastructure.mongo.OrderRepo;
 import pl.goreit.order_service.infrastructure.mongo.ProductRepo;
 
@@ -31,7 +31,10 @@ public class OrderServiceImpl implements OrderService {
     private ProductRepo productRepo;
 
     @Autowired
-    private MqSenderService mqSenderService;
+    private MqOrderService mqOrderService;
+
+    @Autowired
+    private RuntimeService runtimeService;
 
     @Override
     public Order findById(String id) throws DomainException {
@@ -46,6 +49,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order create(CreateOrderRequest orderRequest) throws DomainException {
         ObjectId orderId = ObjectId.get();
+
+        ProcessInstantiationBuilder createOrderProcessBuilder = runtimeService.createProcessInstanceByKey("create_order");
+        createOrderProcessBuilder.setVariable("isInvoice", orderRequest.getIsInvoice());
+        createOrderProcessBuilder.setVariable("isSummarizedPdf", orderRequest.getIsSummarizedPdf());
+        createOrderProcessBuilder.execute();
+
 
         List<OrderLineRequest> orderLineRequests = orderRequest.getOrderlines();
 
@@ -63,12 +72,7 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
 
         Order order = new Order(orderId.toString(), orderRequest.getUserId(), orderlines, LocalDateTime.now());
-
-        try {
-            mqSenderService.sendOrder(order);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        orderRepo.save(order);
 
         return order;
     }

@@ -1,6 +1,5 @@
 package pl.goreit.order_service.api;
 
-import com.example.types.CreateOrderRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import io.swagger.annotations.AuthorizationScope;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.goreit.order_service.DomainException;
 import pl.goreit.order_service.domain.model.Order;
 import pl.goreit.order_service.domain.service.OrderService;
+import pl.goreit.order_service.generated.CreateOrderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

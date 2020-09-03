@@ -17,18 +17,42 @@ spring:
       port: 27017
       password: root
       username: root
+  datasource:
+    schema-name: camunda
+    url: jdbc:postgresql://localhost:5432/camunda
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: false
 
-#  cloud:
+server:
+  port: 8081
+
+camunda.bpm:
+  database:
+    type: postgres
+  admin-user:
+    id: demo
+    password: admin
+    firstName: admin
+  filter:
+    create: All tasks
+
+
+#      cloud:
 #    kubernetes:
 #      discovery:
 #        all-namespaces: true
 
 
-server:
-  port: 8081
-
 #ribbon:
 #  http:
 #    client:
 #      enabled: true
-

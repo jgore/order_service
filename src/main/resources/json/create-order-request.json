@@ -4,6 +4,12 @@
     "userId": {
       "type": "string"
     },
+    "isInvoice": {
+      "type": "boolean"
+    },
+    "isSummarizedPdf": {
+      "type": "boolean"
+    },
     "orderlines": {
       "type": "array",
       "items": {
@@ -11,6 +17,7 @@
       }
     }
   },
+  "required": ["userId", "isInvoice","isSummarizedPdf","orderlines"],
   "definitions": {
     "orderLineRequest": {
       "type": "object",
