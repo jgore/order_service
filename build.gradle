@@ -1,0 +1,79 @@
+buildscript {
+    ext {
+        js2pVersion = '1.0.2'
+        springfoxVersion = '2.9.2'
+    }
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.jsonschema2pojo:jsonsc" +
+                "hema2pojo-gradle-plugin:${js2pVersion}")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+apply plugin: 'jsonschema2pojo'
+
+
+group = 'pl.goreit'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+description = """order_service"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile group: 'org.camunda.bpm.springboot', name: 'camunda-bpm-spring-boot-starter-webapp', version:'7.13.0'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version:'2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version:'2.9.2'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version:'2.2.3'
+
+    runtime group: 'org.postgresql', name: 'postgresql', version:'42.2.14'
+    runtime group: 'org.springframework.boot', name: 'spring-boot-devtools', version:'2.3.3.RELEASE'
+
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.3.3.RELEASE') {
+exclude(module: 'junit-vintage-engine')
+    }
+}
+
+jsonSchema2Pojo {
+    targetPackage = 'pl.goreit.order_service.generated'
+    source = files('src/main/resources/json/')
+    includeHashcodeAndEquals = true
+    includeToString = true
+    includeConstructors = true
+    includeSetters = false
+    initializeCollections = true
+    targetVersion = 1.8
+    inclusionLevel = 'NON_EMPTY'
+    dateTimeType = "java.time.LocalDateTime"
+    dateType = "java.time.LocalDate"
+    timeType = "java.time.LocalTime"
+    removeOldOutput = true
+    useBigDecimals = true
+    generateBuilders = true
+}

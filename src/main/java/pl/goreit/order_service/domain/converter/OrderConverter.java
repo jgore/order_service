@@ -6,7 +6,6 @@ import pl.goreit.order_service.domain.model.Order;
 import pl.goreit.order_service.generated.OrderResponse;
 import pl.goreit.order_service.generated.OrderlineView;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
