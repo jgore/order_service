@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
                 })
                 .collect(Collectors.toList());
 
-        Order order = new Order(orderId.toString(), orderRequest.getUserId(), orderlines, LocalDateTime.now());
+        Order order = new Order(orderId.toString(), orderRequest.getSellerId(), orderRequest.getUserId(), orderlines, LocalDateTime.now());
         orderRepo.save(order);
 
         return order;

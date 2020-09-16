@@ -16,6 +16,8 @@ public class Order {
 
     private String userId;
 
+    private String sellerId;
+
     private List<OrderLine> orderLines;
 
     private Boolean isInvoice;
@@ -31,8 +33,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(String id, String userId, List<OrderLine> orderLines, LocalDateTime creationTime) {
+    public Order(String id, String sellerId, String userId, List<OrderLine> orderLines, LocalDateTime creationTime) {
         this.id = id;
+        this.sellerId = sellerId;
         this.userId = userId;
         this.orderLines = orderLines;
         this.creationTime = creationTime;
@@ -44,6 +47,10 @@ public class Order {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getSellerId() {
+        return sellerId;
     }
 
     public List<OrderLine> getOrderLines() {

@@ -6,7 +6,8 @@ mongodb:
 spring:
   servlet:
   multipart:
-    max-file-size: 3MB
+    enabled: true
+    max-file-size: 20MB
   application:
     name: Order-service
   data:

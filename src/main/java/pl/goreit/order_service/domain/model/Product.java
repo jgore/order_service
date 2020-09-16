@@ -34,13 +34,13 @@ public class Product {
         this.text = text;
         this.price = price;
         this.quantity = quantity;
-        this.status = Status.AVAILABLE;
+        this.status = Status.ACTIVE;
         this.creationDate = LocalDateTime.now();
         this.comments = Lists.newArrayList();
     }
 
     public boolean addComment(Comment comment) throws DomainException {
-        if (Status.AVAILABLE != getStatus()) {
+        if (Status.ACTIVE != getStatus()) {
             throw new DomainException(ExceptionCode.GOREIT_03);
         }
         return comments.add(comment);
@@ -84,6 +84,6 @@ public class Product {
 
 
     public enum Status {
-        AVAILABLE, SOLD, ARCHIVED
+        ACTIVE, SOLD, ARCHIVED
     }
 }

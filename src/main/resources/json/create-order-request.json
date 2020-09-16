@@ -4,6 +4,9 @@
     "userId": {
       "type": "string"
     },
+    "sellerId": {
+      "type": "string"
+    },
     "isInvoice": {
       "type": "boolean"
     },
