@@ -4,6 +4,9 @@
     "id": {
       "type": "string"
     },
+    "userId": {
+      "type": "string"
+    },
     "sellerId": {
       "type": "string"
     },
