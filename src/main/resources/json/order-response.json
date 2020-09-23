@@ -4,6 +4,9 @@
     "id": {
       "type": "string"
     },
+    "sellerId": {
+      "type": "string"
+    },
     "creationTime": {
       "type": "string"
     },
@@ -18,6 +21,9 @@
     "orderlineView": {
       "type": "object",
       "properties": {
+        "sellerId": {
+          "type": "string"
+        },
         "productTitle": {
           "type": "string"
         },

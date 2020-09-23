@@ -17,6 +17,7 @@ public class Product {
 
     @Id
     private String id;
+    private String sellerId;
     private CategoryName categoryName;
     @Indexed(unique = true)
     private String title;
@@ -28,8 +29,9 @@ public class Product {
 
     private LocalDateTime creationDate;
 
-    public Product(CategoryName categoryName, String title, String text, BigDecimal price, Integer quantity) {
+    public Product(CategoryName categoryName, String title, String text, BigDecimal price, Integer quantity, String sellerId) {
         this.categoryName = categoryName;
+        this.sellerId = sellerId;
         this.title = title;
         this.text = text;
         this.price = price;
@@ -44,6 +46,10 @@ public class Product {
             throw new DomainException(ExceptionCode.GOREIT_03);
         }
         return comments.add(comment);
+    }
+
+    public String getSellerId() {
+        return sellerId;
     }
 
     public CategoryName getCategoryName() {

@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
 
                     //@FIXME get all upper
                     Product product = productRepo.findByTitle(orderLineView.getProductTitle()).get();
-                    return new OrderLine(orderId.toString(), product.getTitle(), orderLineView.getAmount(), product.getPrice());
+                    return new OrderLine(orderId.toString(), product.getSellerId() , product.getTitle(), orderLineView.getAmount(), product.getPrice());
                 })
                 .collect(Collectors.toList());
 

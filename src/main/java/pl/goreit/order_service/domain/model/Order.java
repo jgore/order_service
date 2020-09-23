@@ -62,6 +62,6 @@ public class Order {
     }
 
     enum Status {
-        ORDERED, REALIZED, WAITING_FOR_DELIVERY, CLOSED
+        CREATED, REALIZED, WAITING_FOR_DELIVERY, CLOSED
     }
 }
