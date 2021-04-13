@@ -1,6 +1,7 @@
 package pl.goreit.order_service.domain.service.mq;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -42,7 +43,7 @@ public class MqOrderService {
     }
 
     @RabbitListener(queues = CREATE_ORDER_Q_IN)
-    public void listen(String in) throws JsonProcessingException, DomainException {
+    public void listen(String in) throws DomainException, JsonProcessingException {
         System.out.println("Message read from order_q : " + in);
         CreateOrderRequest createOrderRequest = objectMapper.readValue(in, CreateOrderRequest.class);
 

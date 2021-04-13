@@ -1,8 +1,6 @@
 package pl.goreit.order_service.domain.service;
 
 import org.bson.types.ObjectId;
-import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.runtime.ProcessInstantiationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.goreit.order_service.DomainException;
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 @Component
 public class OrderServiceImpl implements OrderService {
 
-
     @Autowired
     private OrderRepo orderRepo;
 
@@ -33,12 +30,15 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private MqOrderService mqOrderService;
 
-    @Autowired
-    private RuntimeService runtimeService;
-
     @Override
     public Order findById(String id) throws DomainException {
-        return orderRepo.findById(id).orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_04));
+
+        if (id == null) {
+            throw new IllegalArgumentException("id cannot be null");
+        }
+
+        return orderRepo.findById(id)
+                .orElseThrow(() -> new DomainException(ExceptionCode.GOREIT_04));
     }
 
     @Override
@@ -49,12 +49,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order create(CreateOrderRequest orderRequest) throws DomainException {
         ObjectId orderId = ObjectId.get();
-
-        ProcessInstantiationBuilder createOrderProcessBuilder = runtimeService.createProcessInstanceByKey("create_order");
-        createOrderProcessBuilder.setVariable("isInvoice", orderRequest.getIsInvoice());
-        createOrderProcessBuilder.setVariable("isSummarizedPdf", orderRequest.getIsSummarizedPdf());
-        createOrderProcessBuilder.execute();
-
 
         List<OrderLineRequest> orderLineRequests = orderRequest.getOrderlines();
 

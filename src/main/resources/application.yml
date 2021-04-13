@@ -4,23 +4,19 @@ mongodb:
       size: 300
 
 spring:
-  servlet:
-  multipart:
-    enabled: true
-    max-file-size: 20MB
   application:
     name: Order-service
   data:
     mongodb:
       database:  goreit
       authentication-database: admin
-      host: localhost
+      host: mongo
       port: 27017
       password: root
       username: root
   datasource:
     schema-name: camunda
-    url: jdbc:postgresql://localhost:5432/camunda
+    url: jdbc:postgresql://postgres:5432/camunda
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver

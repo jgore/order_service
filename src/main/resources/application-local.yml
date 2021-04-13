@@ -1,0 +1,13 @@
+logging.file.path: logs
+
+spring:
+  data:
+    mongodb:
+      database:  goreit
+      authentication-database: admin
+      host: localhost:27017
+      password: root
+      username: root
+  datasource:
+    url: jdbc:postgresql://localhost:5432/camunda
+
